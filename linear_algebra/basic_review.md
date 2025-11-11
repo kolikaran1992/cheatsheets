@@ -85,16 +85,107 @@ Before (unit circle):               After (ellipse stretched along eigenvectors)
 
         y                                   y
         |                                   |
-     *--|--*                             *--|--*
-    *   |   *                           *   |   *
-     *--|--*                             *--|--*
+      *-|-*                              *--|--*
+     *  |  *                            *   |   *
+      *-|-*                              *--|--*
         |                                   |
         +---------- x              λ1>λ2 -> ellipse stretched more in v1 direction
 ```
 
 ---
 
-## 🔷 4. SVD — The Analogy for Rectangular Matrices
+## 🧩 4. Complex Eigenvalues and Eigenvectors
+
+Not all matrices (especially **non-symmetric** ones) have real eigenvalues or real eigenvectors.
+When the **characteristic polynomial** has no real roots, we get **complex eigenvalues and eigenvectors**.
+
+---
+
+### Example
+
+Consider the 2D rotation matrix:
+
+$$
+R(\theta) =
+\begin{bmatrix}
+\cos \theta & -\sin \theta \
+\sin \theta & \cos \theta
+\end{bmatrix}
+$$
+
+Its eigenvalues are:
+
+$$
+\lambda = e^{\pm i\theta} = \cos \theta \pm i \sin \theta
+$$
+
+and the corresponding eigenvectors are **complex**.
+
+---
+
+### Intuition
+
+* Complex eigenvalues represent **rotations** and **oscillations** in real space.
+* They don’t correspond to fixed real directions, but rather to **cyclic motion** within a plane.
+* In real coordinates, a complex eigenpair corresponds to a **2D rotation subspace**.
+
+> 💡 When eigenvalues are complex:
+>
+> * $|\lambda|$ gives the **magnitude of scaling** (stretch or shrink)
+> * $\arg(\lambda)$ gives the **rotation angle**
+
+So even though we can’t visualize complex eigenvectors directly in $\mathbb{R}^n$,
+they describe how the transformation **rotates and scales** vectors within a plane.
+
+---
+
+### Occurrence and Structure
+
+1. **Complex eigenvalues always occur in conjugate pairs.**
+
+   If $A$ is a **real matrix**, and $\lambda = a + bi$ is an eigenvalue,
+   then its **complex conjugate** $\bar{\lambda} = a - bi$ is **also** an eigenvalue.
+
+   This follows because the characteristic polynomial of a real matrix has **real coefficients**,
+   and complex roots of real-coefficient polynomials always occur in conjugate pairs.
+
+   $$
+   \det(A - \lambda I) = 0 \implies \det(A - \bar{\lambda} I) = 0
+   $$
+
+2. **If the matrix degree (size) is odd, there must be at least one real eigenvalue.**
+
+   * A polynomial of **odd degree with real coefficients** must have **at least one real root**.
+   * Therefore, any **odd-dimensional real square matrix** (e.g., $3 \times 3$, $5 \times 5$)
+     has **at least one real eigenvalue** (and hence one real eigenvector).
+
+---
+
+### Connection to Symmetry
+
+| Matrix Type            | Nature of Eigenvalues               | Interpretation                        |
+| ---------------------- | ----------------------------------- | ------------------------------------- |
+| **Symmetric (A = Aᵀ)** | All eigenvalues real                | Pure stretching along orthogonal axes |
+| **Non-symmetric**      | May include complex conjugate pairs | Rotation + scaling in 2D subspaces    |
+
+---
+
+### Geometric Picture of a Complex Pair
+
+Each pair of complex conjugate eigenvalues corresponds to a **2×2 real rotation-scaling block**:
+
+$$
+\begin{bmatrix}
+a & -b \
+b &  a
+\end{bmatrix}
+$$
+
+which represents a rotation by $\tan^{-1}(b/a)$ and a scaling by $\sqrt{a^2 + b^2}$.
+
+---
+
+## 🔷 5. SVD — The Analogy for Rectangular Matrices
 
 When $A$ is **not square or not symmetric**, eigenvalues may not exist.
 Instead, we use the **Singular Value Decomposition (SVD):**
@@ -115,7 +206,7 @@ $$
 A^T A v_i = \sigma_i^2 v_i
 $$
 
-So SVD is a **generalization** of eigen-decomposition. Note that $A^TA$ is symmetric
+So SVD is a **generalization** of eigen-decomposition.
 
 ---
 
@@ -153,10 +244,11 @@ $$
 
 ---
 
-## 🧭 5. Practical Meaning
+## 🧭 6. Practical Meaning
 
-* **Eigenvalues / Eigenvectors:** Describe internal structure of square transformations.
-* **SVD:** Works for any data matrix; reveals dominant modes and correlations.
+* **Eigenvalues / Eigenvectors:** Describe intrinsic structure of square transformations
+* **Complex Eigenpairs:** Encode rotations and oscillations in real space
+* **SVD:** Works for all matrices; reveals dominant patterns and correlations
 * **Applications:**
 
   * Data compression
@@ -167,20 +259,22 @@ $$
 
 ---
 
-## 🧠 6. Key Takeaways
+## 🧠 7. Key Takeaways
 
 ✅ Eigenvalues exist only for **square** matrices
 ✅ Symmetric matrices → **real eigenvalues** and **orthogonal eigenvectors**
+✅ Non-symmetric matrices → may yield **complex conjugate eigenpairs**
+✅ Complex eigenvalues always come in **pairs**
+✅ Odd-dimensional real matrices → **at least one real eigenvalue**
 ✅ SVD generalizes eigen-decomposition to **any** matrix
-✅ Eigenvectors = directions of invariant scaling
-✅ Singular values = strengths of action between spaces
-✅ Both capture the **geometry of transformations**
+✅ Both EVD and SVD capture the **geometry of transformations**
 
 ---
 
 ### Mental Shortcut Summary
 
-| Concept | Works for              | Matrix Form        | Scalars         | Directions                  | Geometric Meaning                    |
-| ------- | ---------------------- | ------------------ | --------------- | --------------------------- | ------------------------------------ |
-| **EVD** | Square, diagonalizable | $A = U D U^T$      | Eigenvalues     | Eigenvectors                | Stretch along same basis             |
-| **SVD** | Any $m \times n$       | $A = U \Sigma V^T$ | Singular values | Left/right singular vectors | Stretch between two orthogonal bases |
+| Concept         | Works for              | Matrix Form                                 | Scalars                 | Directions                  | Geometric Meaning                    |
+| --------------- | ---------------------- | ------------------------------------------- | ----------------------- | --------------------------- | ------------------------------------ |
+| **EVD**         | Square, diagonalizable | $A = U D U^T$                               | Eigenvalues             | Eigenvectors                | Stretch along same basis             |
+| **Complex EVD** | Non-symmetric square   | $A v = \lambda v$, $\lambda \in \mathbb{C}$ | Complex conjugate pairs | Complex eigenvectors        | Rotation + scaling                   |
+| **SVD**         | Any $m \times n$       | $A = U \Sigma V^T$                          | Singular values         | Left/right singular vectors | Stretch between two orthogonal bases |
