@@ -145,14 +145,82 @@ Thus sums of many independent variables approximate a normal distribution.
 
 ## 8. Summary Flow
 
-| Concept | Essence | Link |
-|----------|----------|------|
-| Normal | baseline continuous model | → used in CLT |
-| Log-normal | from change of variables | → finance modeling |
-| Exponential family | unified structure | → includes normal, Poisson |
-| MGF | encodes all moments | → tool for CLT |
-| WLLN | averages → mean (in probability) | → convergence idea |
-| CLT | normalized sums → normal | → explains universality |
+| Concept            | Essence                          | Link                       |
+| ------------------ | -------------------------------- | -------------------------- |
+| Normal             | baseline continuous model        | → used in CLT              |
+| Log-normal         | from change of variables         | → finance modeling         |
+| Exponential family | unified structure                | → includes normal, Poisson |
+| MGF                | encodes all moments              | → tool for CLT             |
+| WLLN               | averages → mean (in probability) | → convergence idea         |
+| CLT                | normalized sums → normal         | → explains universality    |
+
+## A. Markov's and Chebyshev's inequalities (short proofs — addendum)
+
+### Markov's inequality (statement)
+
+For any nonnegative random variable $Z\ge0$ and $a>0$,
+$$
+\boxed{;P(Z\ge a)\le\frac{\mathbb{E}[Z]}{a};}
+$$
+**Proof:** 
+
+For any nonnegative random variable $Z \ge 0$ and any constant $a > 0$:
+
+$$
+P(Z \ge a) \le \frac{\mathbb{E}[Z]}{a}
+$$
+
+
+Define the indicator random variable:
+
+$$
+\mathbf{1}_{{Z \ge a}} =
+\begin{cases}
+1, & Z \ge a, \
+0, & Z < a.
+\end{cases}
+$$
+
+For every outcome, we have the inequality:
+
+$$
+Z \ge a \mathbf{1}_{{Z \ge a}}.
+$$
+
+* When $Z < a$, the right side is $0$ and the inequality holds because $Z \ge 0$.
+* When $Z \ge a$, the right side equals $a$, and $Z \ge a$ by assumption.
+
+Taking expectations on both sides (valid since both sides are nonnegative):
+
+$$
+\mathbb{E}[Z] \ge \mathbb{E}\big[a, \mathbf{1}_{{Z \ge a}}\big].
+$$
+
+Simplify the right-hand side:
+
+$$
+\mathbb{E}\big[a \mathbf{1}*{{Z \ge a}}\big] = a \mathbb{E}\big[\mathbf{1}*{{Z \ge a}}\big] = a P(Z \ge a).
+$$
+
+Therefore:
+
+$$
+P(Z \ge a) \le \frac{\mathbb{E}[Z]}{a}.
+$$
+
+---
+
+### Chebyshev's inequality (from Markov's inequality)
+
+
+
+**Chebyshev's Inequality Proof (apply Markov):** take $Z=(X-\mu)^2\ge0$ and $a=\varepsilon^2$. Then
+$$
+P(|X-\mu|\ge\varepsilon)=P((X-\mu)^2\ge\varepsilon^2)\le\frac{\mathbb{E}[(X-\mu)^2]}{\varepsilon^2}=\frac{\sigma^2}{\varepsilon^2}.
+$$
+
+(These are the two key inequalities used for WLLN and many concentration bounds.)
+
 
 ---
 
