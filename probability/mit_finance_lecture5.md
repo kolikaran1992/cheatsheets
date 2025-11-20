@@ -73,21 +73,42 @@ distribution.
 
 
 
+
+
 ## 5. Martingales
 
-A process $(X_t)$ is a **martingale** if:
-$$\mathbb{E}[X_{t+1} \mid X_1,\dots,X_t] = X_t.$$
+A process $(X_t)$ with filtration $(\mathcal F_t)$ is a **martingale** if
+$$
+\mathbb{E}[X_{t+1} \mid \mathcal F_t] = X_t.
+$$
 
 ### Intuition
 
 A martingale is a **fair game**:
+
 - No expected gain or loss  
 - Future is centered at the present  
-- The process can fluctuate, but the **expected drift is zero**
+- $\mathcal F_t$ = **all information up to time $t$**  
+  (so conditioning on $\mathcal F_t$ is the same whether the process is defined
+  through $X_t$, or a function of it like $Y_t$)
 
-**Example: Simple Random Walk**
-$$\mathbb{E}[X_{t+1} \mid X_t] = X_t.$$
-So SRW is a martingale.
+### Example: Simple Random Walk
+
+$$
+\mathbb{E}[X_{t+1} \mid \mathcal F_t] = X_t,
+$$
+
+so SRW is a martingale.
+
+### Example: Pólya Urn (Key Idea)
+
+If $Y_n = \dfrac{X_n}{n+2}$, then
+$$
+\mathbb{E}[Y_{n+1} \mid \mathcal F_n] = Y_n.
+$$
+
+Same $\mathcal F_n$ is used because both $X_n$ and $Y_n$ are fully determined by
+past draws.
 
 
 
